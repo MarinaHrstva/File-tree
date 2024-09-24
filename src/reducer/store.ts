@@ -1,7 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
+import credentials from "./credentialsSlice";
+import fileTree from "./fileTreeSlice";
 
 const store = configureStore({
-  reducer: {},
+  reducer: {
+    credentials: credentials,
+    fileTree: fileTree,
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import { Provider } from "react-redux";
 
 import "./App.css";
 import { getFiles } from "./services/s3Service";
-import store from "./reducer/store";
-import LoginForm from "./components/LoginForm";
+import { RootState } from "./reducer/store";
 import LoginPage from "./components/Pages/LoginPage";
+import { useSelector } from "react-redux";
+import MainPage from "./components/Pages/MainPage";
 
 export type FileFolderType = {
   name: string;
@@ -13,6 +13,10 @@ export type FileFolderType = {
 };
 
 function App() {
+  const isLoggedIn = useSelector(
+    (state: RootState) => state.credentials.isLoggedIn
+  );
+
   useEffect(() => {
     const fetchFiles = async () => {
       await getFiles();
@@ -21,11 +25,7 @@ function App() {
     fetchFiles();
   }, []);
 
-  return (
-    <Provider store={store}>
-      <LoginPage />
-    </Provider>
-  );
+  return <div>{isLoggedIn ? <MainPage /> : <LoginPage />}</div>;
 }
 
 export default App;
