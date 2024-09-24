@@ -1,22 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { Provider } from "react-redux";
+
 import "./App.css";
 import { getFiles } from "./services/s3Service";
+import store from "./reducer/store";
+import LoginForm from "./components/LoginForm";
+import LoginPage from "./components/Pages/LoginPage";
+
+export type FileFolderType = {
+  name: string;
+  type: string;
+};
 
 function App() {
-  const [files, setFiles] = useState<AWS.S3.ObjectList>([]);
-
   useEffect(() => {
     const fetchFiles = async () => {
-      const fileList = await getFiles();
-      if (fileList) {
-        setFiles(fileList);
-      }
+      await getFiles();
     };
 
     fetchFiles();
   }, []);
-  console.log(files);
-  return <div className="App">It works</div>;
+
+  return (
+    <Provider store={store}>
+      <LoginPage />
+    </Provider>
+  );
 }
 
 export default App;

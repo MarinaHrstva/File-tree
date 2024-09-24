@@ -19,13 +19,13 @@ export const getFiles = async (prefix = "") => {
 
     const folders =
       response.CommonPrefixes?.map((folder) => ({
-        name: folder.Prefix,
+        name: folder.Prefix as string,
         type: "folder",
       })) || [];
 
     const files =
       response.Contents?.filter((file) => file.Key !== prefix).map((file) => ({
-        name: file.Key,
+        name: file.Key as string,
         type: "file",
       })) || [];
 
