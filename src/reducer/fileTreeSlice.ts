@@ -6,25 +6,36 @@ export type Nullable<T> = T | null;
 
 export type FileItem = {
   name: string;
-  type: "folder" | "file";
+  type: "file";
 };
 
+export type FolderItem = {
+  name: string;
+  type: "folder";
+  isOpen: boolean;
+  subfolders: FileTreeType[] | [];
+};
+
+export type FileTreeType = FileItem | FolderItem;
+
 type fileTreeStateType = {
-  fileTree: FileItem[] | [];
+  fileTree: FileTreeType[] | [];
   currentPrefix: string;
+  activeFolderContent: FileTreeType[] | [];
   loading: boolean;
   error: Nullable<string>;
 };
 
 const initialState: fileTreeStateType = {
   fileTree: [],
-  loading: false,
+  activeFolderContent: [],
   currentPrefix: "",
+  loading: false,
   error: null,
 };
 
 export const getFileTree = createAsyncThunk<
-  FileItem[] | [],
+  FileTreeType[] | [],
   string,
   { state: RootState }
 >("fileTree/getFileTree", async (prefix, { getState }) => {
@@ -36,29 +47,86 @@ export const getFileTree = createAsyncThunk<
     region: region,
   });
 
-  const params = {
-    Bucket: bucketName,
-    Prefix: prefix,
-    Delimiter: "/",
-  };
-  const response = await s3.listObjectsV2(params).promise();
-  const folders =
-    response.CommonPrefixes?.map((folder) => {
-      return {
-        name: folder.Prefix,
+  const createSubfoldersTree = async (
+    currentPrefix: string
+  ): Promise<FolderItem[]> => {
+    const params = {
+      Bucket: bucketName,
+      Prefix: currentPrefix,
+      Delimiter: "/",
+    };
+
+    const response = await s3.listObjectsV2(params).promise();
+    const folders: FolderItem[] =
+      response.CommonPrefixes?.map((folder) => ({
+        name: folder.Prefix!,
         type: "folder",
-      } as FileItem;
-    }) || [];
+        isOpen: false,
+        subfolders: [],
+      })) || [];
 
-  const files =
-    response.Contents?.filter((file) => file.Key !== prefix).map((file) => {
-      return {
-        name: file.Key,
+    const foldersWithSubfolders = await Promise.all(
+      folders.map(async (folder) => ({
+        ...folder,
+        subfolders: await createSubfoldersTree(folder.name),
+      }))
+    );
+    return foldersWithSubfolders;
+  };
+  return createSubfoldersTree(prefix);
+});
+
+export const getActiveFolderContent = createAsyncThunk<
+  FileTreeType[] | [],
+  string,
+  { state: RootState }
+>("fileTree/getActiveFolderContent", async (activeFolder, { getState }) => {
+  const { accessKeyId, secretKey, region, bucketName } = getState().credentials;
+
+  const s3 = new AWS.S3({
+    accessKeyId,
+    secretAccessKey: secretKey,
+    region: region,
+  });
+
+  const createSubfoldersTree = async (
+    currentPrefix: string
+  ): Promise<FileTreeType[]> => {
+    const params = {
+      Bucket: bucketName,
+      Prefix: currentPrefix,
+      Delimiter: "/",
+    };
+
+    const response = await s3.listObjectsV2(params).promise();
+
+    const folders: FolderItem[] =
+      response.CommonPrefixes?.map((folder) => ({
+        name: folder.Prefix!,
+        type: "folder",
+        isOpen: false,
+        subfolders: [],
+        files: [],
+      })) || [];
+
+    const files: FileItem[] =
+      response.Contents?.map((file) => ({
+        name: file.Key!,
         type: "file",
-      } as FileItem;
-    }) || [];
+      })) || [];
 
-  return [...folders, ...files];
+    const foldersWithSubfoldersAndFiles = await Promise.all(
+      folders.map(async (folder) => ({
+        ...folder,
+        subfolders: await createSubfoldersTree(folder.name),
+        files: files,
+      }))
+    );
+
+    return [...files, ...foldersWithSubfoldersAndFiles];
+  };
+
+  return createSubfoldersTree(activeFolder);
 });
 
 export const addFile = createAsyncThunk<
@@ -85,7 +153,7 @@ export const addFile = createAsyncThunk<
 });
 
 export const addFolder = createAsyncThunk<
-  FileItem,
+  FolderItem,
   string,
   { state: RootState }
 >("fileTree/addFolder", async (folderName, { getState }) => {
@@ -105,7 +173,12 @@ export const addFolder = createAsyncThunk<
 
   await s3.putObject(params).promise();
 
-  return { name: `${currentPrefix}${folderName}/`, type: "folder" };
+  return {
+    name: `${currentPrefix}${folderName}/`,
+    type: "folder",
+    isOpen: false,
+    subfolders: [],
+  };
 });
 
 const fileTreeSlice = createSlice({
@@ -124,7 +197,7 @@ const fileTreeSlice = createSlice({
       })
       .addCase(
         getFileTree.fulfilled,
-        (state, action: PayloadAction<FileItem[]>) => {
+        (state, action: PayloadAction<FileTreeType[]>) => {
           state.fileTree = action.payload;
           state.loading = false;
         }
@@ -133,6 +206,7 @@ const fileTreeSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || "Something went wrong";
       })
+
       .addCase(addFile.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -144,8 +218,35 @@ const fileTreeSlice = createSlice({
       .addCase(addFile.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Something went wrong";
+      })
+      .addCase(addFolder.pending, (state, action) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(
+        addFolder.fulfilled,
+        (state, action: PayloadAction<FolderItem>) => {
+          state.loading = false;
+        }
+      )
+      .addCase(addFolder.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || "Something went wrong";
+      })
+      .addCase(getActiveFolderContent.pending, (state, action) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getActiveFolderContent.fulfilled, (state, action) => {
+        state.loading = false;
+        state.activeFolderContent = action.payload;
+      })
+      .addCase(getActiveFolderContent.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || "Something went wrong";
       });
   },
 });
 
 export default fileTreeSlice.reducer;
+export const { setCurrentPrefix } = fileTreeSlice.actions;

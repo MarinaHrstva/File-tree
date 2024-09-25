@@ -1,11 +1,43 @@
-import React from "react";
-import { FileFolderType } from "../App";
+import React, { useState } from "react";
+import { FileTreeType } from "../reducer/fileTreeSlice";
 
-function Folder({ name }: FileFolderType) {
+type Props = {
+  folder: FileTreeType;
+  onDoubleClick?: (fileTreeItem: FileTreeType) => void;
+};
+
+function Folder({ folder, onDoubleClick }: Props) {
+  const [isOpen, setIsOpen] = useState(false);
+  const folderName =
+    folder.name
+      .split("/")
+      .filter((f) => !!f)
+      .pop() || folder.name;
+
+  const handleFolderClick = (folder: FileTreeType) => {
+    setIsOpen(!isOpen);
+    // onClick && onClick(folder);
+  };
+
   return (
     <div>
-      <i></i>
-      <p>{name}</p>
+      <div
+        onClick={() => handleFolderClick(folder)}
+        onDoubleClick={() => onDoubleClick && onDoubleClick(folder)}
+      >
+        {folderName}
+      </div>
+      {isOpen &&
+        folder.type === "folder" &&
+        folder.subfolders.map((subfolder) => (
+          <div>
+            <Folder
+              key={subfolder.name}
+              folder={subfolder}
+              onDoubleClick={onDoubleClick}
+            />
+          </div>
+        ))}
     </div>
   );
 }

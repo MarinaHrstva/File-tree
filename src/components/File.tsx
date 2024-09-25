@@ -1,7 +1,10 @@
 import React from "react";
-import { FileFolderType } from "../App";
 
-function File({ name }: FileFolderType) {
+type Props = {
+  name: string;
+};
+
+function File({ name }: Props) {
   return (
     <div>
       <i></i>

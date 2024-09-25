@@ -18,7 +18,7 @@ function LoginForm(): JSX.Element {
 
   function onSubmitHandler(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    //TODO Add orm validation
+    //TODO Add form validation
     dispatch(setCredentials(formData));
   }
 
