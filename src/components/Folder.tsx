@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FileTreeType } from "../reducer/fileTreeSlice";
+import { FaChevronDown, FaChevronUp, FaFolder } from "react-icons/fa";
 
 type Props = {
   folder: FileTreeType;
@@ -16,7 +17,6 @@ function Folder({ folder, onDoubleClick }: Props) {
 
   const handleFolderClick = (folder: FileTreeType) => {
     setIsOpen(!isOpen);
-    // onClick && onClick(folder);
   };
 
   return (
@@ -25,7 +25,7 @@ function Folder({ folder, onDoubleClick }: Props) {
         onClick={() => handleFolderClick(folder)}
         onDoubleClick={() => onDoubleClick && onDoubleClick(folder)}
       >
-        {folderName}
+        <FaFolder /> {folderName} {isOpen ? <FaChevronDown /> : <FaChevronUp />}
       </div>
       {isOpen &&
         folder.type === "folder" &&

@@ -15,12 +15,16 @@ export type FolderItem = {
   isOpen: boolean;
   subfolders: FileTreeType[] | [];
 };
-
+export type SelectedFile = {
+  fileName: string;
+  fileContent: string;
+};
 export type FileTreeType = FileItem | FolderItem;
 
 type fileTreeStateType = {
   fileTree: FileTreeType[] | [];
   currentPrefix: string;
+  selectedFile: Nullable<SelectedFile>;
   activeFolderContent: FileTreeType[] | [];
   loading: boolean;
   error: Nullable<string>;
@@ -30,6 +34,7 @@ const initialState: fileTreeStateType = {
   fileTree: [],
   activeFolderContent: [],
   currentPrefix: "",
+  selectedFile: null,
   loading: false,
   error: null,
 };
@@ -127,6 +132,30 @@ export const getActiveFolderContent = createAsyncThunk<
   };
 
   return createSubfoldersTree(activeFolder);
+});
+
+export const getFile = createAsyncThunk<
+  SelectedFile,
+  string,
+  { state: RootState }
+>("fileTree/getFile", async (fileName, { getState }) => {
+  const { accessKeyId, secretKey, region, bucketName } = getState().credentials;
+
+  const s3 = new AWS.S3({
+    accessKeyId,
+    secretAccessKey: secretKey,
+    region: region,
+  });
+
+  const params = {
+    Bucket: bucketName,
+    Key: fileName,
+  };
+
+  const response = await s3.getObject(params).promise();
+  const fileContent = response.Body?.toString() || "";
+
+  return { fileName, fileContent };
 });
 
 export const addFile = createAsyncThunk<
@@ -242,6 +271,22 @@ const fileTreeSlice = createSlice({
         state.activeFolderContent = action.payload;
       })
       .addCase(getActiveFolderContent.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || "Something went wrong";
+      })
+
+      .addCase(getFile.pending, (state, action) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(
+        getFile.fulfilled,
+        (state, action: PayloadAction<SelectedFile>) => {
+          state.loading = false;
+          state.selectedFile = action.payload;
+        }
+      )
+      .addCase(getFile.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Something went wrong";
       });
