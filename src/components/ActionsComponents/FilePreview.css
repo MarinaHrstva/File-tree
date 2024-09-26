@@ -1,0 +1,16 @@
+.file-preview__container {
+  border-left: 1px solid var(--color-accent-light);
+  overflow-y: scroll;
+  padding-block: 1rem;
+}
+
+.file-preview__container p:first-of-type {
+  color: var(--color-accent-light);
+}
+
+.file-body {
+  border-top: 1px solid var(--color-accent-light);
+  color: var(--color-primary-light);
+  margin-top: 1rem;
+  padding-top: 1rem;
+}

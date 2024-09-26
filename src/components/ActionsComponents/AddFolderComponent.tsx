@@ -1,7 +1,9 @@
 import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "../reducer/store";
-import { addFolder } from "../reducer/fileTreeSlice";
+
+import { AppDispatch } from "../../reducer/store";
+import { addFolder } from "../../reducer/fileTreeSlice";
+import "./AddFolderComponent.css";
 
 function AddFolderComponent() {
   const [folderName, setFolderName] = useState("");
@@ -20,7 +22,7 @@ function AddFolderComponent() {
     }
   }, [folderName, dispatch]);
   return (
-    <div>
+    <div className="add-folder__container">
       <input type="text" onChange={onChangeInputHandler} />
       <button onClick={onAddFolderHandler}>Create a Folder</button>
     </div>

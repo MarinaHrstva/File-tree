@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../reducer/store";
 import { FileTreeType, setCurrentPrefix } from "../../reducer/fileTreeSlice";
 import { useDispatch } from "react-redux";
-import Folder from "../Folder";
+import Folder from "../FileAndFolder/Folder";
 import "./FolderTree.css";
 
 function FolderTree() {

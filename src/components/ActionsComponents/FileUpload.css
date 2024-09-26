@@ -1,0 +1,31 @@
+.create-file__container {
+  display: flex;
+  gap: 1.5rem;
+  padding-inline: 1rem;
+}
+
+.create-file-item {
+  padding: 0;
+}
+
+.create-file-item:last-of-type {
+  border-left: 1px solid var(--color-accent-dark);
+  padding-left: 1rem;
+}
+
+.create-file-item textarea {
+  width: 400px;
+  height: 100px;
+  border-radius: 8px;
+}
+
+.create-file-item input {
+  background-color: white;
+  color: var(--color-accent-dark);
+}
+
+.create-file-item input,
+.create-file-item button {
+  width: 400px;
+  margin-top: 0.5rem;
+}

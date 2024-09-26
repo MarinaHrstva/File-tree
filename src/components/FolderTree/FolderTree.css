@@ -2,4 +2,5 @@
   flex: 1;
   overflow-y: scroll;
   height: 100%;
+  border-right: 1px solid var(--color-accent-dark);
 }

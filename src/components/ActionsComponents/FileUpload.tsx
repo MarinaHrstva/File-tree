@@ -1,8 +1,9 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../reducer/store";
-import { addFile } from "../reducer/fileTreeSlice";
+import { AppDispatch, RootState } from "../../reducer/store";
+import { addFile } from "../../reducer/fileTreeSlice";
+import "./FileUpload.css";
 
 function FileUpload() {
   const dispatch = useDispatch<AppDispatch>();
@@ -10,17 +11,15 @@ function FileUpload() {
     (state: RootState) => state.fileTree.currentPrefix
   );
   const [newFile, setNewFile] = useState({ fileName: "", fileContent: "" });
+  const fileInputValue = useRef<HTMLInputElement>(null);
 
-  const handleFileUpload = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0];
-      if (!file) {
-        return;
-      }
-      dispatch(addFile({ file: file, prefix: currentPrefix }));
-    },
-    [dispatch, currentPrefix]
-  );
+  const handleFileUpload = useCallback(() => {
+    const file = fileInputValue.current?.files?.[0];
+    if (!file) {
+      return;
+    }
+    dispatch(addFile({ file: file, prefix: currentPrefix }));
+  }, [dispatch, currentPrefix]);
 
   const handleAddFile = useCallback(() => {
     if (!newFile.fileContent || !newFile.fileName) {
@@ -44,18 +43,8 @@ function FileUpload() {
   );
 
   return (
-    <>
-      <div>
-        <label htmlFor="fileUpload">Upload Existing File</label>
-        <input
-          type="file"
-          accept=".txt"
-          onChange={handleFileUpload}
-          name="fileUpload"
-        />
-      </div>
-      <p>OR</p>
-      <div>
+    <div className="create-file__container">
+      <div className="input-container create-file-item">
         <label htmlFor="fileName">File Name</label>
         <input
           type="text"
@@ -70,7 +59,17 @@ function FileUpload() {
         />
         <button onClick={handleAddFile}>Add File</button>
       </div>
-    </>
+      <div className="input-container create-file-item">
+        <label htmlFor="fileUpload">Upload Existing File</label>
+        <input
+          type="file"
+          accept=".txt"
+          name="fileUpload"
+          ref={fileInputValue}
+        />
+        <button onClick={handleFileUpload}>Upload File</button>
+      </div>
+    </div>
   );
 }
 

@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
-import FileUpload from "../FileUpload";
-import FilePreview from "../FilePreview";
+import FileUpload from "../ActionsComponents/FileUpload";
+import FilePreview from "./../ActionsComponents/FilePreview";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../reducer/store";
 import { useDispatch } from "react-redux";
 import { getActiveFolderContent } from "../../reducer/fileTreeSlice";
-import Folder from "../Folder";
-import File from "../File";
-import AddFolderComponent from "../AddFolderComponent";
+import Folder from "../FileAndFolder/Folder";
+import File from "../FileAndFolder/File";
+import AddFolderComponent from "../ActionsComponents/AddFolderComponent";
 import "./ActiveFolder.css";
 
 function ActiveFolder(): JSX.Element {
@@ -29,18 +29,22 @@ function ActiveFolder(): JSX.Element {
 
   return (
     <div className="active-folder__container">
-      {activeFolderContent &&
-        activeFolderContent.map((f) => {
-          if (f.type === "folder") {
-            return <Folder folder={f} />;
-          }
-          return <File name={f.name} />;
-        })}
-
-      <div className="actions-container">
-        <AddFolderComponent />
-        <FileUpload />
+      <div className="active-folder__items-wrapper">
+        <div className="active-folder-file-tree__container">
+          {activeFolderContent &&
+            activeFolderContent.map((f) => {
+              if (f.type === "folder") {
+                return <Folder folder={f} />;
+              }
+              return <File name={f.name} />;
+            })}
+        </div>
         <FilePreview />
+      </div>
+
+      <div className="actions__container">
+        <FileUpload />
+        <AddFolderComponent />
       </div>
     </div>
   );
