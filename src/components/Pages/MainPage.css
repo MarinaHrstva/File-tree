@@ -1,0 +1,9 @@
+.view-container {
+  margin: 3rem;
+  padding: 3rem;
+}
+
+.main-page-wrapper {
+  border: 1px solid gray;
+  border-radius: 8px;
+}

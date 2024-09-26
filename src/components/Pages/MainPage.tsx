@@ -9,7 +9,7 @@ import {
 } from "../../reducer/fileTreeSlice";
 import { AppDispatch } from "../../reducer/store";
 import FolderTree from "../FolderTree";
-import "./MainPageStyles.css";
+import "./MainPage.css";
 
 function MainPage() {
   const dispatch = useDispatch<AppDispatch>();
@@ -23,7 +23,7 @@ function MainPage() {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className="view-container main-page-wrapper">
       <header>
         <h1>File tree</h1>
         <button onClick={onLogoutHandler}>Log out</button>

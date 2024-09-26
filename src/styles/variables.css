@@ -1,0 +1,15 @@
+:root {
+  --color-primary: #f9dbbd;
+  --color-accent-200: #ffa5ab;
+  --color-accent-300: #da627d;
+  --color-accent-400: #a53860;
+  --color-accent-500: #450920;
+  --color-white: #fff;
+
+  --font-size-XS: 8px;
+  --font-size-S: 12px;
+  --font-size-M: 16px;
+  --font-size-L: 24px;
+  --font-size-XL: 32px;
+  --font-size-XXL: 48px;
+}

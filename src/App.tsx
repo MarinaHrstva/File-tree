@@ -11,7 +11,7 @@ function App() {
     (state: RootState) => state.credentials.isLoggedIn
   );
 
-  return <div>{isLoggedIn ? <MainPage /> : <LoginPage />}</div>;
+  return <>{isLoggedIn ? <MainPage /> : <LoginPage />}</>;
 }
 
 export default App;
