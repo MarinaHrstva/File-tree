@@ -1,0 +1,4 @@
+.active-folder__container {
+  flex: 1;
+  overflow-y: scroll;
+}

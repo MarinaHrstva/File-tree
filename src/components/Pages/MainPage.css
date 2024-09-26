@@ -1,9 +1,19 @@
-.view-container {
-  margin: 3rem;
-  padding: 3rem;
+.main-page-wrapper {
+  border: 1px solid var(--color-accent-dark);
+  border-radius: 8px;
+  padding: 2rem;
 }
 
-.main-page-wrapper {
-  border: 1px solid gray;
-  border-radius: 8px;
+.main-page-wrapper header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color-accent-dark);
+}
+
+.file-tree-view-wrapper {
+  padding-top: 1rem;
+  height: 90%;
+  display: flex;
+  gap: 2rem;
 }

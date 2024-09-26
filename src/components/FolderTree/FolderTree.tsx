@@ -1,9 +1,10 @@
 import React, { useCallback } from "react";
 import { useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../reducer/store";
-import { FileTreeType, setCurrentPrefix } from "../reducer/fileTreeSlice";
+import { AppDispatch, RootState } from "../../reducer/store";
+import { FileTreeType, setCurrentPrefix } from "../../reducer/fileTreeSlice";
 import { useDispatch } from "react-redux";
-import Folder from "./Folder";
+import Folder from "../Folder";
+import "./FolderTree.css";
 
 function FolderTree() {
   const folders = useSelector((state: RootState) => state.fileTree.fileTree);
@@ -17,8 +18,7 @@ function FolderTree() {
   );
 
   return (
-    <div className="folder-tree_container">
-      <div className="main-folder">Main Folder</div>
+    <div className="folder-tree__container">
       {folders.map((folder) => (
         <Folder
           key={folder.name}

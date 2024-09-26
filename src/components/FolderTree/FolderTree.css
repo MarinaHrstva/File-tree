@@ -1,0 +1,5 @@
+.folder-tree__container {
+  flex: 1;
+  overflow-y: scroll;
+  height: 100%;
+}

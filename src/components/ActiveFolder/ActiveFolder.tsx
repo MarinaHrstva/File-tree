@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
-import FileUpload from "./FileUpload";
-import FilePreview from "./FilePreview";
+import FileUpload from "../FileUpload";
+import FilePreview from "../FilePreview";
 import { useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../reducer/store";
+import { AppDispatch, RootState } from "../../reducer/store";
 import { useDispatch } from "react-redux";
-import { getActiveFolderContent } from "../reducer/fileTreeSlice";
-import Folder from "./Folder";
-import File from "./File";
-import AddFolderComponent from "./AddFolderComponent";
+import { getActiveFolderContent } from "../../reducer/fileTreeSlice";
+import Folder from "../Folder";
+import File from "../File";
+import AddFolderComponent from "../AddFolderComponent";
+import "./ActiveFolder.css";
 
 function ActiveFolder(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
@@ -27,7 +28,7 @@ function ActiveFolder(): JSX.Element {
   }, [dispatch, currentPrefix]);
 
   return (
-    <div>
+    <div className="active-folder__container">
       {activeFolderContent &&
         activeFolderContent.map((f) => {
           if (f.type === "folder") {

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from "react";
-import ActiveFolder from "../ActiveFolder";
+import ActiveFolder from "../ActiveFolder/ActiveFolder";
 import { useDispatch } from "react-redux";
 
 import { resetCredentials } from "../../reducer/credentialsSlice";
@@ -8,7 +8,7 @@ import {
   getFileTree,
 } from "../../reducer/fileTreeSlice";
 import { AppDispatch } from "../../reducer/store";
-import FolderTree from "../FolderTree";
+import FolderTree from "../FolderTree/FolderTree";
 import "./MainPage.css";
 
 function MainPage() {
@@ -28,11 +28,9 @@ function MainPage() {
         <h1>File tree</h1>
         <button onClick={onLogoutHandler}>Log out</button>
       </header>
-      <div className="view-wrapper">
+      <div className="file-tree-view-wrapper">
         <FolderTree />
-        <div>
-          <ActiveFolder />
-        </div>
+        <ActiveFolder />
       </div>
     </div>
   );
