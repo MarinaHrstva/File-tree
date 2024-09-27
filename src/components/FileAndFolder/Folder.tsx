@@ -13,7 +13,6 @@ type Props = {
 function Folder({ folder }: Props) {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [clicks, setClicks] = useState<number>(0);
 
   const folderName =
     folder?.name
@@ -23,26 +22,19 @@ function Folder({ folder }: Props) {
 
   const handleFolderClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setClicks((prev) => prev + 1);
-    setTimeout(() => {
-      if (clicks === 1) {
-        if ("subfolders" in folder && !folder.subfolders.length) {
-          return;
-        }
-        setIsOpen(!isOpen);
-      }
-      setClicks(0);
-    }, 300);
+
+    if ("subfolders" in folder && !folder.subfolders.length) {
+      return;
+    }
+    setIsOpen((isOpen) => !isOpen);
   };
 
   const handleFolderDoubleClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-      if (clicks >= 2) {
-        dispatch(setCurrentPrefix(folder.name));
-        setIsOpen(!isOpen);
-      }
+      e.stopPropagation();
+      dispatch(setCurrentPrefix(folder.name));
     },
-    [clicks, dispatch, folder.name]
+    [dispatch, folder.name]
   );
 
   return (

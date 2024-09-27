@@ -19,7 +19,8 @@ function DeleteItem({ item }: Props) {
     }
   }, [dispatch, item, shouldDelete]);
 
-  const handleClick = useCallback(() => {
+  const handleClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
     const userConfirmation = window.confirm(
       "Are you sure you want to delete this item?"
     );

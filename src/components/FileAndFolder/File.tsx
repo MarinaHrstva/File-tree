@@ -6,6 +6,7 @@ import { AppDispatch } from "../../reducer/store";
 import { FileTreeType, getFile } from "../../reducer/fileTreeSlice";
 import "./FileAndFolder.css";
 import DeleteItem from "../ActionsComponents/DeleteItem";
+import { getFileName } from "../../utils";
 
 type Props = {
   name: string;
@@ -18,12 +19,8 @@ function File({ name }: Props) {
     dispatch(getFile(name));
   }, [dispatch, name]);
 
-  const fileName =
-    name
-      .split("/")
-      .filter((f) => !!f)
-      .pop() || name;
-
+  const fileName = getFileName(name);
+  
   return (
     <div className="file-item__container" onClick={fileClickHandler}>
       <div className="file-item">

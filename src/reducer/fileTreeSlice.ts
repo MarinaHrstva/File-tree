@@ -116,7 +116,7 @@ export const getActiveFolderContent = createAsyncThunk<
 
     const files: any[] = (response.Contents || [])
       .map((file) => {
-        if (file.Key?.endsWith(".tsx")) {
+        if (file.Key?.includes(".txt")) {
           return {
             name: file.Key!,
             type: "file" as const,
@@ -124,7 +124,7 @@ export const getActiveFolderContent = createAsyncThunk<
         }
         return null;
       })
-      .filter((f) => f !== null);
+      .filter((f) => !!f);
 
     const foldersWithSubfoldersAndFiles = await Promise.all(
       folders.map(async (folder) => ({
@@ -244,6 +244,17 @@ const fileTreeSlice = createSlice({
     setCurrentPrefix: (state, action: PayloadAction<string>) => {
       state.currentPrefix = action.payload;
     },
+    resetSelectedFile: (state) => {
+      state.selectedFile = null;
+    },
+    resetInitialState: (state) => {
+      state.activeFolderContent = [];
+      state.currentPrefix = "";
+      state.fileTree = [];
+      state.error = null;
+      state.loading = false;
+      state.selectedFile = null;
+    },
   },
   extraReducers(builder) {
     builder
@@ -262,7 +273,6 @@ const fileTreeSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || "Something went wrong";
       })
-
       .addCase(addFile.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -278,12 +288,9 @@ const fileTreeSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(
-        addFolder.fulfilled,
-        (state, action: PayloadAction<FolderItem>) => {
-          state.loading = false;
-        }
-      )
+      .addCase(addFolder.fulfilled, (state) => {
+        state.loading = false;
+      })
       .addCase(addFolder.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Something went wrong";
@@ -300,7 +307,6 @@ const fileTreeSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || "Something went wrong";
       })
-
       .addCase(getFile.pending, (state, action) => {
         state.loading = true;
         state.error = null;
@@ -315,9 +321,22 @@ const fileTreeSlice = createSlice({
       .addCase(getFile.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Something went wrong";
+      })
+      .addCase(deleteFileOrFolder.pending, (state, action) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteFileOrFolder.fulfilled, (state) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(deleteFileOrFolder.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || "Something went wrong";
       });
   },
 });
 
 export default fileTreeSlice.reducer;
-export const { setCurrentPrefix } = fileTreeSlice.actions;
+export const { setCurrentPrefix, resetInitialState, resetSelectedFile } =
+  fileTreeSlice.actions;
