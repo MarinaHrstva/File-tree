@@ -8,9 +8,10 @@ import DeleteItem from "../ActionsComponents/DeleteItem";
 
 type Props = {
   folder: FileTreeType;
+  margin?: number;
 };
 
-function Folder({ folder }: Props) {
+function Folder({ folder, margin = 0 }: Props) {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -42,6 +43,9 @@ function Folder({ folder }: Props) {
       className="folder-item__container"
       onClick={(e) => handleFolderClick(e)}
       onDoubleClick={handleFolderDoubleClick}
+      style={{
+        marginLeft: margin,
+      }}
     >
       <p className="folder-item">
         <FaFolder /> {folderName}
@@ -58,7 +62,11 @@ function Folder({ folder }: Props) {
         folder.type === "folder" &&
         folder.subfolders.length &&
         folder.subfolders.map((subfolder) => (
-          <Folder key={subfolder?.name} folder={subfolder} />
+          <Folder
+            key={subfolder?.name}
+            folder={subfolder}
+            margin={margin + 8}
+          />
         ))) ||
         null}
     </div>
