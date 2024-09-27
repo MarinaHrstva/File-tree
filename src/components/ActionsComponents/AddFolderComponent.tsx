@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { AppDispatch } from "../../reducer/store";
-import { addFolder } from "../../reducer/fileTreeSlice";
+import { addFolder, getFileTree } from "../../reducer/fileTreeSlice";
 import "./AddFolderComponent.css";
 
 function AddFolderComponent() {
@@ -19,6 +19,7 @@ function AddFolderComponent() {
   const onAddFolderHandler = useCallback(() => {
     if (folderName) {
       dispatch(addFolder(folderName));
+      dispatch(getFileTree(""));
     }
   }, [folderName, dispatch]);
   return (

@@ -1,6 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import { FaTrash } from "react-icons/fa";
-import { deleteFileOrFolder, FileTreeType } from "../../reducer/fileTreeSlice";
+import {
+  deleteFileOrFolder,
+  FileTreeType,
+  getFileTree,
+} from "../../reducer/fileTreeSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../reducer/store";
 
@@ -10,24 +14,20 @@ type Props = {
 
 function DeleteItem({ item }: Props) {
   const dispatch = useDispatch<AppDispatch>();
-  const [shouldDelete, setShouldDelete] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (shouldDelete) {
-      dispatch(deleteFileOrFolder({ key: item.name }));
-      setShouldDelete(false);
-    }
-  }, [dispatch, item, shouldDelete]);
-
-  const handleClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-    const userConfirmation = window.confirm(
-      "Are you sure you want to delete this item?"
-    );
-    if (userConfirmation) {
-      setShouldDelete(true);
-    }
-  }, []);
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      e.stopPropagation();
+      const userConfirmation = window.confirm(
+        "Are you sure you want to delete this item?"
+      );
+      if (userConfirmation) {
+        dispatch(deleteFileOrFolder({ key: item.name }));
+        dispatch(getFileTree(""));
+      }
+    },
+    [dispatch, item.name]
+  );
 
   return (
     <div onClick={handleClick}>

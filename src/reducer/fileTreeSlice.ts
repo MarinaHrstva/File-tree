@@ -217,7 +217,7 @@ export const addFolder = createAsyncThunk<
 });
 
 export const deleteFileOrFolder = createAsyncThunk<
-  void,
+  string,
   { key: string },
   { state: RootState }
 >("fileTree/deleteFileOrFolder", async ({ key }, { getState }) => {
@@ -235,6 +235,7 @@ export const deleteFileOrFolder = createAsyncThunk<
   };
 
   await s3.deleteObject(params).promise();
+  return key;
 });
 
 const fileTreeSlice = createSlice({
@@ -279,6 +280,10 @@ const fileTreeSlice = createSlice({
       })
       .addCase(addFile.fulfilled, (state, action: PayloadAction<FileItem>) => {
         state.loading = false;
+        state.activeFolderContent = [
+          action.payload,
+          ...state.activeFolderContent,
+        ];
       })
       .addCase(addFile.rejected, (state, action) => {
         state.loading = false;
@@ -288,9 +293,16 @@ const fileTreeSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(addFolder.fulfilled, (state) => {
-        state.loading = false;
-      })
+      .addCase(
+        addFolder.fulfilled,
+        (state, action: PayloadAction<FolderItem>) => {
+          state.activeFolderContent = [
+            ...state.activeFolderContent,
+            action.payload,
+          ];
+          state.loading = false;
+        }
+      )
       .addCase(addFolder.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Something went wrong";
@@ -326,8 +338,11 @@ const fileTreeSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(deleteFileOrFolder.fulfilled, (state) => {
+      .addCase(deleteFileOrFolder.fulfilled, (state, action) => {
         state.loading = false;
+        state.activeFolderContent = JSON.parse(
+          JSON.stringify(state.activeFolderContent)
+        ).filter((f: FileTreeType) => f.name !== action.payload);
         state.error = null;
       })
       .addCase(deleteFileOrFolder.rejected, (state, action) => {

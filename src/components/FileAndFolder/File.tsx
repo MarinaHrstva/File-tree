@@ -20,13 +20,12 @@ function File({ name }: Props) {
   }, [dispatch, name]);
 
   const fileName = getFileName(name);
-  
+
   return (
     <div className="file-item__container" onClick={fileClickHandler}>
       <div className="file-item">
         <p>
           <FaFile />
-
           {fileName}
         </p>
         <DeleteItem item={{ name } as FileTreeType} />
