@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 
 import "./FileAndFolder.css";
 import DeleteItem from "../ActionsComponents/DeleteItem";
+import { useSelector } from "react-redux";
+import { RootState } from "../../reducer/store";
 
 type Props = {
   folder: FileTreeType;
@@ -13,6 +15,9 @@ type Props = {
 
 function Folder({ folder, margin = 0 }: Props) {
   const dispatch = useDispatch();
+  const currentPrefix = useSelector(
+    (state: RootState) => state.fileTree.currentPrefix
+  );
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const folderName =
@@ -21,14 +26,17 @@ function Folder({ folder, margin = 0 }: Props) {
       .filter((f) => !!f)
       .pop() || folder?.name;
 
-  const handleFolderClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleFolderClick = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
 
-    if ("subfolders" in folder && !folder.subfolders.length) {
-      return;
-    }
-    setIsOpen((isOpen) => !isOpen);
-  };
+      if ("subfolders" in folder && !folder.subfolders.length) {
+        return;
+      }
+      setIsOpen((isOpen) => !isOpen);
+    },
+    [folder]
+  );
 
   const handleFolderDoubleClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -38,8 +46,11 @@ function Folder({ folder, margin = 0 }: Props) {
     [dispatch, folder.name]
   );
 
+  const additionalClassName = folder?.name === currentPrefix && "active-folder";
+
   return (
     <div
+      key={folder.name}
       className="folder-item__container"
       onClick={(e) => handleFolderClick(e)}
       onDoubleClick={handleFolderDoubleClick}
@@ -47,7 +58,7 @@ function Folder({ folder, margin = 0 }: Props) {
         marginLeft: margin,
       }}
     >
-      <p className="folder-item">
+      <div className={`folder-item ${additionalClassName}`}>
         <FaFolder /> {folderName}
         {folder.type === "folder" && folder.subfolders.length ? (
           isOpen ? (
@@ -57,7 +68,7 @@ function Folder({ folder, margin = 0 }: Props) {
           )
         ) : null}
         <DeleteItem item={folder} />
-      </p>
+      </div>
       {(isOpen &&
         folder.type === "folder" &&
         folder.subfolders.length &&

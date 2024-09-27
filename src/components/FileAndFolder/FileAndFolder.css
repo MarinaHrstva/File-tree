@@ -8,7 +8,20 @@
   justify-content: space-between;
 }
 
+.file-item:hover,
+.folder-item:hover {
+  cursor: pointer;
+  box-shadow: 1px 0px 5px 0px rgba(69, 162, 158, 0.75);
+  -webkit-box-shadow: 1px 0px 5px 0px rgba(69, 162, 158, 0.75);
+  -moz-box-shadow: 1px 0px 5px 0px rgba(69, 162, 158, 0.75);
+}
+
 .folder-item__container,
 .file-item__container {
   margin-block: 4px;
+}
+
+.active-folder {
+  background-color: var(--color-accent-dark);
+  color: var(--color-primary-dark);
 }

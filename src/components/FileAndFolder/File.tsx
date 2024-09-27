@@ -24,10 +24,10 @@ function File({ name }: Props) {
   return (
     <div className="file-item__container" onClick={fileClickHandler}>
       <div className="file-item">
-        <p>
+        <div>
           <FaFile />
           {fileName}
-        </p>
+        </div>
         <DeleteItem item={{ name } as FileTreeType} />
       </div>
     </div>

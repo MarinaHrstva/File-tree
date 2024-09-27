@@ -1,0 +1,3 @@
+.delete-item__container:hover {
+  color: var(--color-accent-light);
+}

@@ -1,5 +1,6 @@
 import React, { useCallback } from "react";
 import { FaTrash } from "react-icons/fa";
+
 import {
   deleteFileOrFolder,
   FileTreeType,
@@ -7,6 +8,7 @@ import {
 } from "../../reducer/fileTreeSlice";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../reducer/store";
+import "./DeleteItem.css";
 
 type Props = {
   item: FileTreeType;
@@ -30,7 +32,7 @@ function DeleteItem({ item }: Props) {
   );
 
   return (
-    <div onClick={handleClick}>
+    <div onClick={handleClick} className="delete-item__container">
       <FaTrash />
     </div>
   );
