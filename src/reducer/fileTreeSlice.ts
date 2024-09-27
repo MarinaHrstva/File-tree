@@ -13,7 +13,7 @@ export type FolderItem = {
   name: string;
   type: "folder";
   isOpen: boolean;
-  subfolders: FileTreeType[] | [];
+  subfolders: any[];
 };
 export type SelectedFile = {
   fileName: string;
@@ -114,11 +114,17 @@ export const getActiveFolderContent = createAsyncThunk<
         files: [],
       })) || [];
 
-    const files: FileItem[] =
-      response.Contents?.map((file) => ({
-        name: file.Key!,
-        type: "file",
-      })) || [];
+    const files: any[] = (response.Contents || [])
+      .map((file) => {
+        if (file.Key?.endsWith(".tsx")) {
+          return {
+            name: file.Key!,
+            type: "file" as const,
+          };
+        }
+        return null;
+      })
+      .filter((f) => f !== null);
 
     const foldersWithSubfoldersAndFiles = await Promise.all(
       folders.map(async (folder) => ({
@@ -210,6 +216,27 @@ export const addFolder = createAsyncThunk<
   };
 });
 
+export const deleteFileOrFolder = createAsyncThunk<
+  void,
+  { key: string },
+  { state: RootState }
+>("fileTree/deleteFileOrFolder", async ({ key }, { getState }) => {
+  const { accessKeyId, secretKey, region, bucketName } = getState().credentials;
+
+  const s3 = new AWS.S3({
+    accessKeyId,
+    secretAccessKey: secretKey,
+    region: region,
+  });
+
+  const params = {
+    Bucket: bucketName,
+    Key: key,
+  };
+
+  await s3.deleteObject(params).promise();
+});
+
 const fileTreeSlice = createSlice({
   name: "fileTree",
   initialState,
@@ -242,7 +269,6 @@ const fileTreeSlice = createSlice({
       })
       .addCase(addFile.fulfilled, (state, action: PayloadAction<FileItem>) => {
         state.loading = false;
-        state.fileTree = [action.payload, ...state.fileTree];
       })
       .addCase(addFile.rejected, (state, action) => {
         state.loading = false;

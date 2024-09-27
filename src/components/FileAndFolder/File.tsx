@@ -3,8 +3,9 @@ import { FaFile } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 
 import { AppDispatch } from "../../reducer/store";
-import { getFile } from "../../reducer/fileTreeSlice";
+import { FileTreeType, getFile } from "../../reducer/fileTreeSlice";
 import "./FileAndFolder.css";
+import DeleteItem from "../ActionsComponents/DeleteItem";
 
 type Props = {
   name: string;
@@ -25,10 +26,14 @@ function File({ name }: Props) {
 
   return (
     <div className="file-item__container" onClick={fileClickHandler}>
-      <p className="file-item">
-        <FaFile />
-        {fileName}
-      </p>
+      <div className="file-item">
+        <p>
+          <FaFile />
+
+          {fileName}
+        </p>
+        <DeleteItem item={{ name } as FileTreeType} />
+      </div>
     </div>
   );
 }

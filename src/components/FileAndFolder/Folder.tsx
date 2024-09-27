@@ -1,45 +1,74 @@
-import React, { useState } from "react";
-import { FileTreeType } from "../../reducer/fileTreeSlice";
+import React, { useCallback, useState } from "react";
+import { FileTreeType, setCurrentPrefix } from "../../reducer/fileTreeSlice";
 import { FaChevronDown, FaChevronUp, FaFolder } from "react-icons/fa";
+import { useDispatch } from "react-redux";
 
 import "./FileAndFolder.css";
+import DeleteItem from "../ActionsComponents/DeleteItem";
 
 type Props = {
   folder: FileTreeType;
-  onDoubleClick?: (fileTreeItem: FileTreeType) => void;
 };
 
-function Folder({ folder, onDoubleClick }: Props) {
-  const [isOpen, setIsOpen] = useState(false);
+function Folder({ folder }: Props) {
+  const dispatch = useDispatch();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [clicks, setClicks] = useState<number>(0);
+
   const folderName =
-    folder.name
+    folder?.name
       .split("/")
       .filter((f) => !!f)
-      .pop() || folder.name;
+      .pop() || folder?.name;
 
   const handleFolderClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setIsOpen(!isOpen);
+    setClicks((prev) => prev + 1);
+    setTimeout(() => {
+      if (clicks === 1) {
+        if ("subfolders" in folder && !folder.subfolders.length) {
+          return;
+        }
+        setIsOpen(!isOpen);
+      }
+      setClicks(0);
+    }, 300);
   };
+
+  const handleFolderDoubleClick = useCallback(
+    (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      if (clicks >= 2) {
+        dispatch(setCurrentPrefix(folder.name));
+        setIsOpen(!isOpen);
+      }
+    },
+    [clicks, dispatch, folder.name]
+  );
 
   return (
     <div
       className="folder-item__container"
       onClick={(e) => handleFolderClick(e)}
-      onDoubleClick={() => onDoubleClick && onDoubleClick(folder)}
+      onDoubleClick={handleFolderDoubleClick}
     >
       <p className="folder-item">
-        <FaFolder /> {folderName} {isOpen ? <FaChevronDown /> : <FaChevronUp />}
+        <FaFolder /> {folderName}
+        {folder.type === "folder" && folder.subfolders.length ? (
+          isOpen ? (
+            <FaChevronDown />
+          ) : (
+            <FaChevronUp />
+          )
+        ) : null}
+        <DeleteItem item={folder} />
       </p>
-      {isOpen &&
+      {(isOpen &&
         folder.type === "folder" &&
+        folder.subfolders.length &&
         folder.subfolders.map((subfolder) => (
-          <Folder
-            key={subfolder.name}
-            folder={subfolder}
-            onDoubleClick={onDoubleClick}
-          />
-        ))}
+          <Folder key={subfolder?.name} folder={subfolder} />
+        ))) ||
+        null}
     </div>
   );
 }

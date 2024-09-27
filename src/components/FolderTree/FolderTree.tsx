@@ -1,30 +1,17 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../reducer/store";
-import { FileTreeType, setCurrentPrefix } from "../../reducer/fileTreeSlice";
-import { useDispatch } from "react-redux";
+
+import { RootState } from "../../reducer/store";
 import Folder from "../FileAndFolder/Folder";
 import "./FolderTree.css";
 
 function FolderTree() {
   const folders = useSelector((state: RootState) => state.fileTree.fileTree);
-  const dispatch = useDispatch<AppDispatch>();
-
-  const handleFolderClick = useCallback(
-    (folder: FileTreeType) => {
-      dispatch(setCurrentPrefix(folder.name));
-    },
-    [dispatch]
-  );
 
   return (
     <div className="folder-tree__container">
       {folders.map((folder) => (
-        <Folder
-          key={folder.name}
-          folder={folder}
-          onDoubleClick={handleFolderClick}
-        />
+        <Folder key={folder.name} folder={folder} />
       ))}
     </div>
   );
