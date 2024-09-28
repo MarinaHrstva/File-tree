@@ -2,8 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { CredentialsStateType } from "./types";
 
-
-const initialState: CredentialsStateType = {
+export const initialState: CredentialsStateType = {
   secretKey: "",
   accessKeyId: "",
   bucketName: "",
@@ -30,6 +29,7 @@ const credentialsSlice = createSlice({
       state.accessKeyId = "";
       state.bucketName = "";
       state.isLoggedIn = false;
+      state.region = "";
     },
   },
 });

@@ -16,7 +16,7 @@ import {
   getFileTree,
 } from "./fileTreeThunks";
 
-const initialState: fileTreeStateType = {
+export const initialState: fileTreeStateType = {
   fileTree: [],
   activeFolderContent: [],
   currentPrefix: "",
