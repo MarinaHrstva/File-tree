@@ -17,6 +17,10 @@
   flex: 1;
 }
 
+.active-folder-file-tree__container p {
+  color: var(--color-accent-light);
+}
+
 .actions__container {
   flex: 1;
   margin: 1rem 0;

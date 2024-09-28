@@ -32,10 +32,11 @@ function ActiveFolder(): JSX.Element {
     <div className="active-folder__container">
       <div className="active-folder__items-wrapper">
         <div className="active-folder-file-tree__container">
+          {!activeFolderContent.length && <p>The selected folder is empty</p>}
           {activeFolderContent &&
             activeFolderContent.map((f) => {
               if (f.type === "folder") {
-                return <Folder folder={f} isActiveFolder margin={0} />;
+                return <Folder folder={f} margin={0} />;
               }
               return <File name={f.name} />;
             })}
