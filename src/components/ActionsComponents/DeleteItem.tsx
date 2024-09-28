@@ -1,10 +1,12 @@
 import React, { useCallback } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { FaTrash } from "react-icons/fa";
 
 import { deleteFileOrFolder, getFileTree } from "../../reducer/fileTreeThunks";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../reducer/store";
+import { AppDispatch, RootState } from "../../reducer/store";
 import { FileTreeType } from "../../reducer/types";
+import { resetSelectedFile } from "../../reducer/fileTreeSlice";
 import "./DeleteItem.css";
 
 type Props = {
@@ -13,6 +15,9 @@ type Props = {
 
 function DeleteItem({ item }: Props) {
   const dispatch = useDispatch<AppDispatch>();
+  const selectedFile = useSelector(
+    (state: RootState) => state.fileTree.selectedFile
+  );
 
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -23,9 +28,12 @@ function DeleteItem({ item }: Props) {
       if (userConfirmation) {
         dispatch(deleteFileOrFolder({ key: item.name }));
         dispatch(getFileTree(""));
+        if (selectedFile?.fileName === item.name) {
+          dispatch(resetSelectedFile());
+        }
       }
     },
-    [dispatch, item.name]
+    [dispatch, item.name, selectedFile?.fileName]
   );
 
   return (

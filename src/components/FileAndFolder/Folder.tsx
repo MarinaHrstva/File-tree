@@ -12,9 +12,10 @@ import { FileTreeType } from "../../reducer/types";
 type Props = {
   folder: FileTreeType;
   margin?: number;
+  isActiveFolder?: boolean;
 };
 
-function Folder({ folder, margin = 0 }: Props) {
+function Folder({ folder, margin = 8, isActiveFolder }: Props) {
   const dispatch = useDispatch();
   const currentPrefix = useSelector(
     (state: RootState) => state.fileTree.currentPrefix
@@ -77,7 +78,7 @@ function Folder({ folder, margin = 0 }: Props) {
           <Folder
             key={subfolder?.name}
             folder={subfolder}
-            margin={margin + 8}
+            margin={isActiveFolder ? 0 : margin + 8}
           />
         ))) ||
         null}
