@@ -3,7 +3,9 @@
   --color-primary-light: #c5c6c7;
   --color-accent-dark: #45a29e;
   --color-accent-light: #66fcf1;
+  --color-error-red: red;
 
+  --font-size-XXS: 4px;
   --font-size-XS: 8px;
   --font-size-S: 12px;
   --font-size-M: 16px;

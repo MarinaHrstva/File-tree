@@ -1,13 +1,10 @@
 import React, { useCallback } from "react";
 import { FaTrash } from "react-icons/fa";
 
-import {
-  deleteFileOrFolder,
-  FileTreeType,
-  getFileTree,
-} from "../../reducer/fileTreeSlice";
+import { deleteFileOrFolder, getFileTree } from "../../reducer/fileTreeThunks";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../reducer/store";
+import { FileTreeType } from "../../reducer/types";
 import "./DeleteItem.css";
 
 type Props = {

@@ -4,7 +4,7 @@ import FilePreview from "./../ActionsComponents/FilePreview";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../reducer/store";
 import { useDispatch } from "react-redux";
-import { getActiveFolderContent } from "../../reducer/fileTreeSlice";
+import { getActiveFolderContent } from "../../reducer/fileTreeThunks";
 import Folder from "../FileAndFolder/Folder";
 import File from "../FileAndFolder/File";
 import AddFolderComponent from "../ActionsComponents/AddFolderComponent";

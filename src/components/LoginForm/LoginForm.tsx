@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+
 import {
   CredentialsStateType,
   setCredentials,
 } from "../../reducer/credentialsSlice";
-import { useDispatch } from "react-redux";
-
 import "./LoginForm.css";
+import InputError from "../common/InputError";
 
 function LoginForm(): JSX.Element {
   const dispatch = useDispatch();
@@ -18,9 +19,30 @@ function LoginForm(): JSX.Element {
     bucketName: "",
   });
 
+  const [errors, setErrors] = useState<{
+    accessKeyId: boolean;
+    secretKey: boolean;
+    bucketName: boolean;
+  }>({
+    accessKeyId: false,
+    secretKey: false,
+    bucketName: false,
+  });
+
   function onSubmitHandler(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    //TODO Add form validation
+    const errorsCopy = { ...errors };
+    Object.keys(formData).forEach((key) => {
+      if (!formData[key as keyof typeof formData]) {
+        errorsCopy[key as keyof typeof formData] = true;
+      } else {
+        errorsCopy[key as keyof typeof formData] = false;
+      }
+    });
+    setErrors(errorsCopy);
+    if (Object.values(errorsCopy).some((v) => !!v)) {
+      return;
+    }
     dispatch(setCredentials(formData));
   }
 
@@ -48,6 +70,7 @@ function LoginForm(): JSX.Element {
           value={formData.accessKeyId}
           onChange={onChangeInputHandler}
         />
+        {errors.accessKeyId && <InputError />}
       </div>
       <div className="input-container">
         <label htmlFor="Secret access key">Secret access key</label>
@@ -58,6 +81,7 @@ function LoginForm(): JSX.Element {
           value={formData.secretKey}
           onChange={onChangeInputHandler}
         />
+        {errors.secretKey && <InputError />}
       </div>
       <div className="input-container">
         <label htmlFor="Bucket name">Bucket name</label>
@@ -68,6 +92,7 @@ function LoginForm(): JSX.Element {
           value={formData.bucketName}
           onChange={onChangeInputHandler}
         />
+        {errors.bucketName && <InputError />}
       </div>
       <div className="btn-container">
         <button onClick={onCancelHandler}>Cancel</button>

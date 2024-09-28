@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { FileTreeType, setCurrentPrefix } from "../../reducer/fileTreeSlice";
+import { setCurrentPrefix } from "../../reducer/fileTreeSlice";
 import { FaChevronDown, FaChevronUp, FaFolder } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 
@@ -7,6 +7,7 @@ import "./FileAndFolder.css";
 import DeleteItem from "../ActionsComponents/DeleteItem";
 import { useSelector } from "react-redux";
 import { RootState } from "../../reducer/store";
+import { FileTreeType } from "../../reducer/types";
 
 type Props = {
   folder: FileTreeType;

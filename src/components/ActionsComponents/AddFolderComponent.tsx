@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { AppDispatch } from "../../reducer/store";
-import { addFolder, getFileTree } from "../../reducer/fileTreeSlice";
+import { addFolder, getFileTree } from "../../reducer/fileTreeThunks";
 import "./AddFolderComponent.css";
 
 function AddFolderComponent() {

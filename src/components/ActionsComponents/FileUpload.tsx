@@ -1,8 +1,8 @@
 import React, { useCallback, useRef, useState } from "react";
-
 import { useDispatch, useSelector } from "react-redux";
+
 import { AppDispatch, RootState } from "../../reducer/store";
-import { addFile } from "../../reducer/fileTreeSlice";
+import { addFile } from "../../reducer/fileTreeThunks";
 import "./FileUpload.css";
 
 function FileUpload() {
