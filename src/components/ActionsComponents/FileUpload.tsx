@@ -6,19 +6,29 @@ import { addFile } from "../../reducer/fileTreeThunks";
 import InputError from "../common/InputError";
 import "./FileUpload.css";
 
+const newFileInitialState = { fileName: "", fileContent: "" };
+const errorInitialState = {
+  fileName: false,
+  fileContent: false,
+};
+
+type NewFileType = {
+  fileName: string;
+  fileContent: string;
+};
+
+type ErrorType = {
+  fileName: boolean;
+  fileContent: boolean;
+};
+
 function FileUpload() {
   const dispatch = useDispatch<AppDispatch>();
   const currentPrefix = useSelector(
     (state: RootState) => state.fileTree.currentPrefix
   );
-  const [newFile, setNewFile] = useState({ fileName: "", fileContent: "" });
-  const [error, setError] = useState<{
-    fileName: boolean;
-    fileContent: boolean;
-  }>({
-    fileName: false,
-    fileContent: false,
-  });
+  const [newFile, setNewFile] = useState<NewFileType>(newFileInitialState);
+  const [error, setError] = useState<ErrorType>(errorInitialState);
 
   const fileInputValue = useRef<HTMLInputElement>(null);
 
@@ -51,7 +61,7 @@ function FileUpload() {
     });
 
     dispatch(addFile({ file, prefix: currentPrefix }));
-    setNewFile({ fileName: "", fileContent: "" });
+    setNewFile(newFileInitialState);
   }, [currentPrefix, dispatch, error, newFile]);
 
   const handleNewFileInputsChange = useCallback(

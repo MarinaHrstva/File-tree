@@ -25,3 +25,11 @@ export type fileTreeStateType = {
   loading: boolean;
   error: Nullable<string>;
 };
+
+export type CredentialsStateType = {
+  secretKey: string;
+  accessKeyId: string;
+  bucketName: string;
+  region: string;
+  isLoggedIn: boolean;
+};

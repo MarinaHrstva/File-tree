@@ -8,6 +8,7 @@ import DeleteItem from "../ActionsComponents/DeleteItem";
 import { RootState } from "../../reducer/store";
 import { FileTreeType } from "../../reducer/types";
 import "./FileAndFolder.css";
+import { getFileName } from "../../utils";
 
 type Props = {
   folder: FileTreeType;
@@ -22,11 +23,7 @@ function Folder({ folder, margin = 8, isActiveFolder }: Props) {
   );
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const folderName =
-    folder?.name
-      .split("/")
-      .filter((f) => !!f)
-      .pop() || folder?.name;
+  const folderName = (folder?.name && getFileName(folder.name)) || folder?.name;
 
   const handleFolderClick = useCallback(
     (e: React.MouseEvent) => {

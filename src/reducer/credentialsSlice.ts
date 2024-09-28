@@ -1,12 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export type CredentialsStateType = {
-  secretKey: string;
-  accessKeyId: string;
-  bucketName: string;
-  region: string;
-  isLoggedIn: boolean;
-};
+import { CredentialsStateType } from "./types";
+
 
 const initialState: CredentialsStateType = {
   secretKey: "",

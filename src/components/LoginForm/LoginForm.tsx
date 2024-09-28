@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import {
-  CredentialsStateType,
-  setCredentials,
-} from "../../reducer/credentialsSlice";
+import { setCredentials } from "../../reducer/credentialsSlice";
 import InputError from "../common/InputError";
 import "./LoginForm.css";
+import { CredentialsStateType } from "../../reducer/types";
 
 const initialFormDataState = {
   accessKeyId: "",

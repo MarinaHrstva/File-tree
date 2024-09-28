@@ -17,6 +17,7 @@ function MainPage() {
   const error = useSelector((state: RootState) => state.fileTree.error);
 
   const dispatch = useDispatch<AppDispatch>();
+  
   useEffect(() => {
     dispatch(getFileTree(""));
     dispatch(getActiveFolderContent(""));

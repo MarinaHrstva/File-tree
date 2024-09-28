@@ -16,7 +16,7 @@ function FolderTree() {
 
   const handleMainFolderDoubleClick = useCallback(() => {
     dispatch(setCurrentPrefix(""));
-  }, []);
+  }, [dispatch]);
 
   const additionalClassName = currentPrefix === "" && "active-folder";
 
