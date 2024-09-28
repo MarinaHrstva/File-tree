@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { AppDispatch, RootState } from "../../reducer/store";
 import { addFile } from "../../reducer/fileTreeThunks";
-import "./FileUpload.css";
 import InputError from "../common/InputError";
+import "./FileUpload.css";
 
 function FileUpload() {
   const dispatch = useDispatch<AppDispatch>();

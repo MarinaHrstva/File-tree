@@ -5,29 +5,36 @@ import {
   CredentialsStateType,
   setCredentials,
 } from "../../reducer/credentialsSlice";
-import "./LoginForm.css";
 import InputError from "../common/InputError";
+import "./LoginForm.css";
+
+const initialFormDataState = {
+  accessKeyId: "",
+  secretKey: "",
+  bucketName: "",
+};
+
+const initialErrorsState = {
+  accessKeyId: false,
+  secretKey: false,
+  bucketName: false,
+};
+
+type ErrorsType = {
+  accessKeyId: boolean;
+  secretKey: boolean;
+  bucketName: boolean;
+};
 
 function LoginForm(): JSX.Element {
   const dispatch = useDispatch();
 
-  const [formData, setFormData] = useState<
-    Omit<CredentialsStateType, "isLoggedIn" | "region">
-  >({
-    accessKeyId: "",
-    secretKey: "",
-    bucketName: "",
-  });
+  const [formData, setFormData] =
+    useState<Omit<CredentialsStateType, "isLoggedIn" | "region">>(
+      initialFormDataState
+    );
 
-  const [errors, setErrors] = useState<{
-    accessKeyId: boolean;
-    secretKey: boolean;
-    bucketName: boolean;
-  }>({
-    accessKeyId: false,
-    secretKey: false,
-    bucketName: false,
-  });
+  const [errors, setErrors] = useState<ErrorsType>(initialErrorsState);
 
   function onSubmitHandler(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
@@ -48,11 +55,7 @@ function LoginForm(): JSX.Element {
 
   function onCancelHandler(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    setFormData({
-      accessKeyId: "",
-      secretKey: "",
-      bucketName: "",
-    });
+    setFormData(initialFormDataState);
   }
 
   function onChangeInputHandler(e: React.ChangeEvent<HTMLInputElement>) {

@@ -36,9 +36,9 @@ function ActiveFolder(): JSX.Element {
           {activeFolderContent &&
             activeFolderContent.map((f) => {
               if (f.type === "folder") {
-                return <Folder folder={f} margin={0} />;
+                return <Folder folder={f} margin={0} key={f.name} />;
               }
-              return <File name={f.name} />;
+              return <File name={f.name} key={f.name} />;
             })}
         </div>
         <FilePreview />

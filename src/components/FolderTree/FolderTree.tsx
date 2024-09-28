@@ -1,11 +1,11 @@
 import React, { useCallback } from "react";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { AppDispatch, RootState } from "../../reducer/store";
 import Folder from "../FileAndFolder/Folder";
-import "./FolderTree.css";
-import { useDispatch } from "react-redux";
 import { setCurrentPrefix } from "../../reducer/fileTreeSlice";
+import "./FolderTree.css";
 
 function FolderTree() {
   const dispatch = useDispatch<AppDispatch>();

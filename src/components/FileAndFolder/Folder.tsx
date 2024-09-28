@@ -1,13 +1,13 @@
 import React, { useCallback, useState } from "react";
-import { setCurrentPrefix } from "../../reducer/fileTreeSlice";
 import { FaChevronDown, FaChevronUp, FaFolder } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-
-import "./FileAndFolder.css";
-import DeleteItem from "../ActionsComponents/DeleteItem";
 import { useSelector } from "react-redux";
+
+import { setCurrentPrefix } from "../../reducer/fileTreeSlice";
+import DeleteItem from "../ActionsComponents/DeleteItem";
 import { RootState } from "../../reducer/store";
 import { FileTreeType } from "../../reducer/types";
+import "./FileAndFolder.css";
 
 type Props = {
   folder: FileTreeType;

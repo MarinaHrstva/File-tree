@@ -4,10 +4,10 @@ import { useDispatch } from "react-redux";
 
 import { AppDispatch } from "../../reducer/store";
 import { getFile } from "../../reducer/fileTreeThunks";
-import "./FileAndFolder.css";
 import DeleteItem from "../ActionsComponents/DeleteItem";
 import { getFileName } from "../../utils";
 import { FileTreeType } from "../../reducer/types";
+import "./FileAndFolder.css";
 
 type Props = {
   name: string;
