@@ -28,6 +28,7 @@ function FileUpload() {
       return;
     }
     dispatch(addFile({ file: file, prefix: currentPrefix }));
+    fileInputValue.current.value = "";
   }, [dispatch, currentPrefix]);
 
   const handleAddFile = useCallback(() => {
@@ -50,6 +51,7 @@ function FileUpload() {
     });
 
     dispatch(addFile({ file, prefix: currentPrefix }));
+    setNewFile({ fileName: "", fileContent: "" });
   }, [currentPrefix, dispatch, error, newFile]);
 
   const handleNewFileInputsChange = useCallback(
@@ -69,6 +71,7 @@ function FileUpload() {
         <input
           type="text"
           name="fileName"
+          value={newFile.fileName}
           onChange={handleNewFileInputsChange}
         />
         {error.fileName && <InputError />}
@@ -76,6 +79,7 @@ function FileUpload() {
         <textarea
           name="fileContent"
           id="createFile"
+          value={newFile.fileContent}
           onChange={handleNewFileInputsChange}
         />
         {error.fileContent && <InputError />}
