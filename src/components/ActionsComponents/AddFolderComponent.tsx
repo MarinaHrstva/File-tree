@@ -24,13 +24,14 @@ function AddFolderComponent() {
       setError(false);
       dispatch(addFolder(folderName));
       dispatch(getFileTree(""));
+      setFolderName("");
     } else setError(true);
   }, [folderName, dispatch]);
-  
+
   return (
     <div className="add-folder__container">
       <div>
-        <input type="text" onChange={onChangeInputHandler} />
+        <input type="text" onChange={onChangeInputHandler} value={folderName} />
         {error && <InputError />}
       </div>
       <button onClick={onAddFolderHandler}>Create a Folder</button>
