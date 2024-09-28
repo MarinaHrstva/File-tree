@@ -1,6 +1,25 @@
 # File Tree Ract App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+
+
+## Used Front-End technologies:
+
+* React.js
+* JavaScript
+* TypeScript
+* Redux Toolkit
+* HTML & CSS
+* Jest
+* React Testing Library
+
+<br>
+
+## Back-End:
+AWS S3
+
+<br>
+
 
 ## Available Scripts
 
