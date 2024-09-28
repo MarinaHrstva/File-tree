@@ -26,6 +26,7 @@ function AddFolderComponent() {
       dispatch(getFileTree(""));
     } else setError(true);
   }, [folderName, dispatch]);
+  
   return (
     <div className="add-folder__container">
       <div>

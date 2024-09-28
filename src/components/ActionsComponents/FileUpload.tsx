@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../reducer/store";
 import { addFile } from "../../reducer/fileTreeThunks";
 import "./FileUpload.css";
+import InputError from "../common/InputError";
 
 function FileUpload() {
   const dispatch = useDispatch<AppDispatch>();
@@ -11,6 +12,14 @@ function FileUpload() {
     (state: RootState) => state.fileTree.currentPrefix
   );
   const [newFile, setNewFile] = useState({ fileName: "", fileContent: "" });
+  const [error, setError] = useState<{
+    fileName: boolean;
+    fileContent: boolean;
+  }>({
+    fileName: false,
+    fileContent: false,
+  });
+
   const fileInputValue = useRef<HTMLInputElement>(null);
 
   const handleFileUpload = useCallback(() => {
@@ -22,15 +31,26 @@ function FileUpload() {
   }, [dispatch, currentPrefix]);
 
   const handleAddFile = useCallback(() => {
-    if (!newFile.fileContent || !newFile.fileName) {
+    const errorsCopy = { ...error };
+    Object.keys(newFile).forEach((key) => {
+      if (!newFile[key as keyof typeof newFile]) {
+        errorsCopy[key as keyof typeof newFile] = true;
+      } else {
+        errorsCopy[key as keyof typeof newFile] = false;
+      }
+    });
+
+    setError(errorsCopy);
+    if (Object.values(errorsCopy).some((v) => !!v)) {
       return;
     }
+
     const file = new File([newFile.fileContent], `${newFile.fileName}.txt`, {
       type: "text/plain",
     });
 
     dispatch(addFile({ file, prefix: currentPrefix }));
-  }, [currentPrefix, dispatch, newFile.fileContent, newFile.fileName]);
+  }, [currentPrefix, dispatch, error, newFile]);
 
   const handleNewFileInputsChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -51,12 +71,14 @@ function FileUpload() {
           name="fileName"
           onChange={handleNewFileInputsChange}
         />
+        {error.fileName && <InputError />}
         <label htmlFor="fileContent"> Create New File</label>
         <textarea
           name="fileContent"
           id="createFile"
           onChange={handleNewFileInputsChange}
         />
+        {error.fileContent && <InputError />}
         <button onClick={handleAddFile}>Add File</button>
       </div>
       <div className="input-container create-file-item">
