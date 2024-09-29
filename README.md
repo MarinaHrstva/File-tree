@@ -29,6 +29,13 @@ In the bottom right section the user can found all the file managment actions.
 From here the user can add new file ot uploading an existing one can create new folders to the active one:
 ![image](https://github.com/user-attachments/assets/1e4155a7-df51-40e7-bff7-7add8eb8e725)
 
+Deleting item is possible by clicking on the bin icon:<br>
+![image](https://github.com/user-attachments/assets/e8a36f1a-c3d5-49bf-ac34-dc2a9909ff7d) <br>
+
+And confirm after that: <br>
+![image](https://github.com/user-attachments/assets/745d0b3b-b758-4dd3-902b-dd5b4cde32c1)
+
+
 
 
 
