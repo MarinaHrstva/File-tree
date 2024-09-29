@@ -10,11 +10,11 @@ The users should fill in all input fields:
 
 #### Main View Page
 
-Wthen te user is successfully authorized the main page  is displayed:
+When the user is successfully authorized the main page  is displayed:
 ![image](https://github.com/user-attachments/assets/b4605600-9a7b-463b-8d85-5e3ad00fab1e)
 
 The left menu represents the entire folder structure
-If a folder contains subfolders the user can open in and see the inner folders:
+If a folder contains subfolders the user can open it and see the inner folders:<br>
 ![image](https://github.com/user-attachments/assets/2cf69c35-7808-4ae7-bdf1-1817ad7d0fa0)
 
 
@@ -25,9 +25,16 @@ In the right view the user can see the entire contents of the active folder incl
 By by selecting a file, its content is displaying in the righ section:
 ![image](https://github.com/user-attachments/assets/affac879-82e6-48df-90a4-a7865e64f86d)
 
-In the bottom right section the user can found all the file managment actions. 
+In the bottom right section the user can find all the file managment actions. 
 From here the user can add new file ot uploading an existing one can create new folders to the active one:
 ![image](https://github.com/user-attachments/assets/1e4155a7-df51-40e7-bff7-7add8eb8e725)
+
+Deleting item is possible by clicking on the bin icon:<br>
+![image](https://github.com/user-attachments/assets/e8a36f1a-c3d5-49bf-ac34-dc2a9909ff7d) <br>
+
+And confirm after that: <br>
+![image](https://github.com/user-attachments/assets/745d0b3b-b758-4dd3-902b-dd5b4cde32c1)
+
 
 
 
