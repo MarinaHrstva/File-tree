@@ -10,7 +10,7 @@ The users should fill in all input fields:
 
 #### Main View Page
 
-Wthen te user is successfully authorized the main page  is displayed:
+When the user is successfully authorized the main page  is displayed:
 ![image](https://github.com/user-attachments/assets/b4605600-9a7b-463b-8d85-5e3ad00fab1e)
 
 The left menu represents the entire folder structure
