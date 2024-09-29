@@ -14,7 +14,7 @@ Wthen te user is successfully authorized the main page  is displayed:
 ![image](https://github.com/user-attachments/assets/b4605600-9a7b-463b-8d85-5e3ad00fab1e)
 
 The left menu represents the entire folder structure
-If a folder contains subfolders the user can open in and see the inner folders:
+If a folder contains subfolders the user can open in and see the inner folders:<br>
 ![image](https://github.com/user-attachments/assets/2cf69c35-7808-4ae7-bdf1-1817ad7d0fa0)
 
 
