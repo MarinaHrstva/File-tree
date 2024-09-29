@@ -65,7 +65,7 @@ const LoginForm: FC = () => {
       <div className="input-container">
         <label htmlFor="Access key Id">Access key Id</label>
         <input
-          type="password"
+          type="text"
           placeholder="Access key Id"
           name="accessKeyId"
           value={formData.accessKeyId}
