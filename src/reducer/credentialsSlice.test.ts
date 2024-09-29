@@ -2,7 +2,7 @@ import reducer, {
   initialState,
   setCredentials,
   resetCredentials,
-} from "../credentialsSlice";
+} from "./credentialsSlice";
 
 const CREDENTIALS_MOCK = {
   secretKey: "secretKeyTest",

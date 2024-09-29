@@ -3,8 +3,8 @@ import reducer, {
   resetInitialState,
   resetSelectedFile,
   setCurrentPrefix,
-} from "../fileTreeSlice";
-import { fileTreeStateType } from "../types";
+} from "./fileTreeSlice";
+import { fileTreeStateType } from "./types";
 
 const NEW_STATE_MOCK = {
   fileTree: [],
