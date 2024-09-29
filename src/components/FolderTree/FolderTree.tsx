@@ -1,13 +1,12 @@
-import React, { useCallback } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import React, { FC, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 import { AppDispatch, RootState } from "../../reducer/store";
 import Folder from "../FileAndFolder/Folder";
 import { setCurrentPrefix } from "../../reducer/fileTreeSlice";
 import "./FolderTree.css";
 
-function FolderTree() {
+const FolderTree: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const folders = useSelector((state: RootState) => state.fileTree.fileTree);
   const currentPrefix = useSelector(
@@ -33,6 +32,6 @@ function FolderTree() {
       ))}
     </div>
   );
-}
+};
 
 export default FolderTree;

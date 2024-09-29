@@ -1,6 +1,5 @@
-import React, { useCallback } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import React, { FC, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { FaTrash } from "react-icons/fa";
 
 import { deleteFileOrFolder, getFileTree } from "../../reducer/fileTreeThunks";
@@ -13,7 +12,7 @@ type Props = {
   item: FileTreeType;
 };
 
-function DeleteItem({ item }: Props) {
+const DeleteItem: FC<Props> = ({ item }) => {
   const dispatch = useDispatch<AppDispatch>();
   const selectedFile = useSelector(
     (state: RootState) => state.fileTree.selectedFile
@@ -41,6 +40,6 @@ function DeleteItem({ item }: Props) {
       <FaTrash />
     </div>
   );
-}
+};
 
 export default DeleteItem;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { setCredentials } from "../../reducer/credentialsSlice";
@@ -24,7 +24,7 @@ type ErrorsType = {
   bucketName: boolean;
 };
 
-function LoginForm(): JSX.Element {
+const LoginForm: FC = () => {
   const dispatch = useDispatch();
 
   const [formData, setFormData] =
@@ -65,7 +65,7 @@ function LoginForm(): JSX.Element {
       <div className="input-container">
         <label htmlFor="Access key Id">Access key Id</label>
         <input
-          type="text"
+          type="password"
           placeholder="Access key Id"
           name="accessKeyId"
           value={formData.accessKeyId}
@@ -76,7 +76,7 @@ function LoginForm(): JSX.Element {
       <div className="input-container">
         <label htmlFor="Secret access key">Secret access key</label>
         <input
-          type="text"
+          type="password"
           placeholder="Secret access key"
           name="secretKey"
           value={formData.secretKey}
@@ -101,6 +101,6 @@ function LoginForm(): JSX.Element {
       </div>
     </form>
   );
-}
+};
 
 export default LoginForm;

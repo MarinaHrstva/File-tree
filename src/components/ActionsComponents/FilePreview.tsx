@@ -1,11 +1,11 @@
-import React from "react";
+import React, { FC } from "react";
 import { useSelector } from "react-redux";
 
 import { RootState } from "../../reducer/store";
 import { getFileName } from "../../utils";
 import "./FilePreview.css";
 
-export default function FilePreview() {
+const FilePreview: FC = () => {
   const selectedFile = useSelector(
     (state: RootState) => state.fileTree.selectedFile
   );
@@ -23,4 +23,6 @@ export default function FilePreview() {
       )}
     </div>
   );
-}
+};
+
+export default FilePreview;

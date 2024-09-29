@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import React, { FC, useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { resetCredentials } from "../../reducer/credentialsSlice";
 import ActiveFolder from "../ActiveFolder/ActiveFolder";
@@ -13,11 +12,11 @@ import {
 } from "../../reducer/fileTreeThunks";
 import "./MainPage.css";
 
-function MainPage() {
+const MainPage: FC = () => {
   const error = useSelector((state: RootState) => state.fileTree.error);
 
   const dispatch = useDispatch<AppDispatch>();
-  
+
   useEffect(() => {
     dispatch(getFileTree(""));
     dispatch(getActiveFolderContent(""));
@@ -44,6 +43,6 @@ function MainPage() {
       </div>
     </div>
   );
-}
+};
 
 export default MainPage;

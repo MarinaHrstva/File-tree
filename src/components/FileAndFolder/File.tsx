@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { FC, useCallback } from "react";
 import { FaFile } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 
@@ -13,7 +13,7 @@ type Props = {
   name: string;
 };
 
-function File({ name }: Props) {
+const File: FC<Props> = ({ name }) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const fileClickHandler = useCallback(() => {
@@ -33,6 +33,6 @@ function File({ name }: Props) {
       </div>
     </div>
   );
-}
+};
 
 export default File;

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { FC, useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { AppDispatch } from "../../reducer/store";
@@ -6,7 +6,7 @@ import { addFolder, getFileTree } from "../../reducer/fileTreeThunks";
 import "./AddFolderComponent.css";
 import InputError from "../common/InputError";
 
-function AddFolderComponent() {
+const AddFolderComponent: FC = () => {
   const [folderName, setFolderName] = useState("");
   const [error, setError] = useState<boolean>(false);
 
@@ -37,6 +37,6 @@ function AddFolderComponent() {
       <button onClick={onAddFolderHandler}>Create a Folder</button>
     </div>
   );
-}
+};
 
 export default AddFolderComponent;

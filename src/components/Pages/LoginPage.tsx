@@ -1,9 +1,9 @@
-import React from "react";
+import React, { FC } from "react";
 
 import LoginForm from "../LoginForm/LoginForm";
 import "./LoginPage.css";
 
-function LoginPage() {
+const LoginPage: FC = () => {
   return (
     <div className="view-container login-page-wrapper">
       <h2>
@@ -12,6 +12,6 @@ function LoginPage() {
       <LoginForm />
     </div>
   );
-}
+};
 
 export default LoginPage;

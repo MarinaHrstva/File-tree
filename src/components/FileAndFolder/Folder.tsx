@@ -1,7 +1,6 @@
-import React, { useCallback, useState } from "react";
+import React, { FC, useCallback, useState } from "react";
 import { FaChevronDown, FaChevronUp, FaFolder } from "react-icons/fa";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { setCurrentPrefix } from "../../reducer/fileTreeSlice";
 import DeleteItem from "../ActionsComponents/DeleteItem";
@@ -16,7 +15,7 @@ type Props = {
   isActiveFolder?: boolean;
 };
 
-function Folder({ folder, margin = 8, isActiveFolder }: Props) {
+const Folder: FC<Props> = ({ folder, margin = 8, isActiveFolder }) => {
   const dispatch = useDispatch();
   const currentPrefix = useSelector(
     (state: RootState) => state.fileTree.currentPrefix
@@ -81,6 +80,6 @@ function Folder({ folder, margin = 8, isActiveFolder }: Props) {
         null}
     </div>
   );
-}
+};
 
 export default Folder;

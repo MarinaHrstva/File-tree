@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { FC, useCallback, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { AppDispatch, RootState } from "../../reducer/store";
@@ -22,7 +22,7 @@ type ErrorType = {
   fileContent: boolean;
 };
 
-function FileUpload() {
+const FileUpload: FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const currentPrefix = useSelector(
     (state: RootState) => state.fileTree.currentPrefix
@@ -96,7 +96,7 @@ function FileUpload() {
         <button onClick={handleAddFile}>Add File</button>
       </div>
       <div className="input-container create-file-item">
-        <label htmlFor="fileUpload">Upload Existing File</label>
+        <label htmlFor="fileUpload">Upload Existing Text File</label>
         <input
           type="file"
           accept=".txt"
@@ -107,6 +107,6 @@ function FileUpload() {
       </div>
     </div>
   );
-}
+};
 
 export default FileUpload;

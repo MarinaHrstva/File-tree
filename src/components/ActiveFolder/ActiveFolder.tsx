@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import FileUpload from "../ActionsComponents/FileUpload";
 import FilePreview from "./../ActionsComponents/FilePreview";
 import { AppDispatch, RootState } from "../../reducer/store";
-import { useDispatch } from "react-redux";
 import { getActiveFolderContent } from "../../reducer/fileTreeThunks";
 import Folder from "../FileAndFolder/Folder";
 import File from "../FileAndFolder/File";

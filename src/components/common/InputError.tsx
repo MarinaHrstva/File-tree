@@ -1,7 +1,7 @@
-import React from "react";
+import React, { FC } from "react";
 
-function InputError() {
+const InputError: FC = () => {
   return <p className="error-message">The input value is required</p>;
-}
+};
 
 export default InputError;
