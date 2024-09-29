@@ -1,10 +1,65 @@
-# Getting Started with Create React App
+# File Tree Ract App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#### Login Page
+
+The firs page is Login Page where the user should add their credentials
+![image](https://github.com/user-attachments/assets/5989376d-7144-4675-a6e1-0f44dbdcce77)
+
+The users should fill in all input fields:
+![image](https://github.com/user-attachments/assets/334a72af-491b-433d-856f-40fd650e80b9)
+
+#### Main View Page
+
+Wthen te user is successfully authorized the main page  is displayed:
+![image](https://github.com/user-attachments/assets/b4605600-9a7b-463b-8d85-5e3ad00fab1e)
+
+The left menu represents the entire folder structure
+If a folder contains subfolders the user can open in and see the inner folders:
+![image](https://github.com/user-attachments/assets/2cf69c35-7808-4ae7-bdf1-1817ad7d0fa0)
+
+
+By double click on a folder user selects it as currently active folder and its content is displaying in the middle view:
+![image](https://github.com/user-attachments/assets/bd6bee2e-6283-4b9b-a226-fa796d105536)
+
+In the right view the user can see the entire contents of the active folder including files.
+By by selecting a file, its content is displaying in the righ section:
+![image](https://github.com/user-attachments/assets/affac879-82e6-48df-90a4-a7865e64f86d)
+
+In the bottom right section the user can found all the file managment actions. 
+From here the user can add new file ot uploading an existing one can create new folders to the active one:
+![image](https://github.com/user-attachments/assets/1e4155a7-df51-40e7-bff7-7add8eb8e725)
+
+
+
+
+
+
+
+
+## Used Front-End technologies:
+
+* React.js
+* JavaScript
+* TypeScript
+* Redux Toolkit
+* HTML & CSS
+* Jest
+* React Testing Library
+
+<br>
+
+## Back-End:
+AWS S3
+
+<br>
+
 
 ## Available Scripts
 
 In the project directory, you can run:
+### `npm install`
+
+and after that
 
 ### `npm start`
 
@@ -19,28 +74,4 @@ You will also see any lint errors in the console.
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
