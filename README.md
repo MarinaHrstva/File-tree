@@ -25,7 +25,7 @@ In the right view the user can see the entire contents of the active folder incl
 By by selecting a file, its content is displaying in the righ section:
 ![image](https://github.com/user-attachments/assets/affac879-82e6-48df-90a4-a7865e64f86d)
 
-In the bottom right section the user can found all the file managment actions. 
+In the bottom right section the user can find all the file managment actions. 
 From here the user can add new file ot uploading an existing one can create new folders to the active one:
 ![image](https://github.com/user-attachments/assets/1e4155a7-df51-40e7-bff7-7add8eb8e725)
 
