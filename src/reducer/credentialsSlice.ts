@@ -21,7 +21,7 @@ const credentialsSlice = createSlice({
       state.accessKeyId = action.payload.accessKeyId;
       state.secretKey = action.payload.secretKey;
       state.bucketName = action.payload.bucketName;
-      state.region = process.env.REACT_APP_AWS_REGION as string;
+      state.region = "eu-west-1";
       state.isLoggedIn = true;
     },
     resetCredentials: (state) => {
